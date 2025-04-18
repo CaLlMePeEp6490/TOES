@@ -52,7 +52,7 @@
 
     .menu-subheader {
       background-color: #0c0c0c;
-      padding: 8px 15px;
+      padding: 6px 15px;
       color: #ffffff;
       font-size: 14px;
       font-weight: bold;
@@ -69,22 +69,34 @@
       display: inline-block;
     }
 
+    /* Common styles for all menu options, including main menu and submenus */
     .menu-option {
-      padding: 10px 15px;
+      padding: 5px 15px;
       color: #cccccc;
-      font-size: 14px;
+      font-size: 13px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #1a1a1a;
-      transition: background-color 0.2s, transform 0.2s;
+      transition: background-color 0.2s;
       user-select: none;
+      height: 24px;
+      cursor: pointer;
+      position: relative;
     }
 
     .menu-option.active {
       color: #bf00ff;
       background-color: #0c0c0c;
+    }
+    
+    .menu-option.active .option-text {
       transform: translateX(4px);
+      transition: transform 0.2s;
+    }
+    
+    /* New style for enabled options */
+    .menu-option.enabled .option-text {
+      color: #bf00ff;
     }
 
     .menu-option-icon {
@@ -95,23 +107,31 @@
       font-family: "Segoe UI Symbol", sans-serif;
       color: #bf00ff;
     }
+    
+    .option-text {
+      flex: 1;
+      transition: transform 0.2s, color 0.3s;
+    }
 
     .menu-footer {
-      padding: 8px 15px;
+      padding: 6px 15px;
       color: #666666;
       font-size: 12px;
       display: flex;
       justify-content: space-between;
       border-top: 1px solid #1a1a1a;
+      margin-top: auto;
     }
 
     .menu-page {
       display: none;
       background-color: #000000;
+      flex: 1;
     }
 
     .submenu-content {
-      min-height: 200px;
+      display: flex;
+      flex-direction: column;
     }
 
     .empty-text {
@@ -119,6 +139,78 @@
       text-align: center;
       padding: 40px 0;
       font-style: italic;
+    }
+    
+    /* Added style for emoji to make them purple */
+    .emoji {
+      color: #bf00ff;
+      font-size: 14px;
+    }
+
+    /* Ensure content areas fill available space */
+    #mainMenu, .menu-page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .submenu-content {
+      flex: 1;
+    }
+    
+    /* Toggle Switch Styles */
+    .switch-container {
+      width: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 34px;
+      height: 14px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #333;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: -2px;
+      bottom: -2px;
+      background-color: #666;
+      transition: .4s;
+      border-radius: 50%;
+      box-shadow: 0 0 2px rgba(0,0,0,0.3);
+    }
+    
+    input:checked + .slider {
+      background-color: #6b0080;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(20px);
+      background-color: #bf00ff;
     }
   </style>
 </head>
@@ -133,18 +225,72 @@
     <div class="menu-subheader" id="menuSubheader">HOME</div>
 
     <div id="mainMenu">
-      <div class="menu-option active"><div><span class="menu-option-icon">👤</span>Self</div></div>
-      <div class="menu-option"><div><span class="menu-option-icon">🌐</span>Online</div></div>
-      <div class="menu-option"><div><span class="menu-option-icon">🔫</span>Weapon</div></div>
-      <div class="menu-option"><div><span class="menu-option-icon">👊</span>Combat</div></div>
-      <div class="menu-option"><div><span class="menu-option-icon">🚗</span>Vehicle</div></div>
-      <div class="menu-option"><div><span class="menu-option-icon">📦</span>Miscellaneous</div></div>
-      <div class="menu-option"><div><span class="menu-option-icon">🔧</span>Settings</div></div>
+      <div class="menu-option active">
+        <div class="option-text">
+          <span class="menu-option-icon"><span class="emoji">👤</span></span>Self
+        </div>
+      </div>
+      <div class="menu-option">
+        <div class="option-text">
+          <span class="menu-option-icon"><span class="emoji">🌐</span></span>Online
+        </div>
+      </div>
+      <div class="menu-option">
+        <div class="option-text">
+          <span class="menu-option-icon"><span class="emoji">🔫</span></span>Weapon
+        </div>
+      </div>
+      <div class="menu-option">
+        <div class="option-text">
+          <span class="menu-option-icon"><span class="emoji">👊</span></span>Combat
+        </div>
+      </div>
+      <div class="menu-option">
+        <div class="option-text">
+          <span class="menu-option-icon"><span class="emoji">🚗</span></span>Vehicle
+        </div>
+      </div>
+      <div class="menu-option">
+        <div class="option-text">
+          <span class="menu-option-icon"><span class="emoji">📦</span></span>Miscellaneous
+        </div>
+      </div>
+      <div class="menu-option">
+        <div class="option-text">
+          <span class="menu-option-icon"><span class="emoji">🔧</span></span>Settings
+        </div>
+      </div>
     </div>
 
     <div id="selfPage" class="menu-page">
       <div class="submenu-content">
-        <div class="menu-option"><div><span class="menu-option-icon">❤️</span>God Mode</div><div class="menu-option-icon">»</div></div>
+        <div class="menu-option active">
+          <div class="option-text">God Mode</div>
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="godModeToggle" onchange="toggleOption(this, 0)">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="menu-option">
+          <div class="option-text">Invisibility</div>
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="invisibilityToggle" onchange="toggleOption(this, 1)">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="menu-option">
+          <div class="option-text">No Clip</div>
+          <div class="switch-container">
+            <label class="switch">
+              <input type="checkbox" id="noClipToggle" onchange="toggleOption(this, 2)">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -156,64 +302,159 @@
 
   <script>
     let currentIndex = 0;
-    const options = document.querySelectorAll('#mainMenu .menu-option');
-
-    function updatePageCount() {
-      document.getElementById('pageCount').textContent = `${currentIndex + 1}/${options.length}`;
-    }
-
-    function updateSelection(index) {
-      options.forEach((opt, i) => {
-        opt.classList.toggle('active', i === index);
-        if (i === index) opt.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-      updatePageCount();
-    }
-
+    let currentSubIndex = 0;
+    const mainOptions = document.querySelectorAll('#mainMenu .menu-option');
+    const selfOptions = document.querySelectorAll('#selfPage .menu-option');
+    
     function showPage(page) {
       document.getElementById('mainMenu').style.display = 'none';
-      document.querySelectorAll('.menu-page').forEach(p => p.style.display = 'none');
-      const target = document.getElementById(`${page}Page`);
-      if (target) target.style.display = 'block';
-      document.getElementById('menuSubheader').innerHTML = `<span class="back-button" onclick="goBack()">←</span>${page.toUpperCase()}`;
-      updatePageCount();
-    }
-
-    function goBack() {
-      document.querySelectorAll('.menu-page').forEach(p => p.style.display = 'none');
-      document.getElementById('mainMenu').style.display = 'block';
-      document.getElementById('menuSubheader').textContent = 'HOME';
-      updatePageCount();
-    }
-
-    function handleArrowNavigation(e) {
-      if (document.getElementById('mainMenu').style.display === 'block') {
-        if (e.key === 'ArrowDown') {
-          currentIndex = (currentIndex + 1) % options.length;
-          updateSelection(currentIndex);
-          e.preventDefault();
-        } else if (e.key === 'ArrowUp') {
-          currentIndex = (currentIndex - 1 + options.length) % options.length;
-          updateSelection(currentIndex);
-          e.preventDefault();
-        } else if (e.key === 'Enter') {
-          const label = options[currentIndex].textContent.trim().toLowerCase();
-          const pageMap = ['self', 'online', 'weapon', 'combat', 'vehicle', 'misc', 'settings'];
-          const page = pageMap[currentIndex];
-          if (page) showPage(page);
-          e.preventDefault();
-        }
-      } else if (e.key === 'Backspace') {
-        goBack();
-        e.preventDefault();
+      document.getElementById(page + 'Page').style.display = 'flex';
+      document.getElementById('menuSubheader').innerHTML = '<span class="back-button" onclick="goBack()">←</span>' + page.toUpperCase();
+      
+      // Reset selection for submenus
+      if (page === 'self') {
+        selfOptions.forEach((opt, i) => {
+          opt.classList.toggle('active', i === 0);
+        });
+        document.getElementById('pageCount').textContent = '1/' + selfOptions.length;
+        currentSubIndex = 0;
+      } else {
+        document.getElementById('pageCount').textContent = '1/1';
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const root = document.getElementById('menuRoot');
-      root.focus();
-      root.addEventListener('keydown', handleArrowNavigation);
-      updatePageCount();
+    function goBack() {
+      let pages = document.getElementsByClassName('menu-page');
+      for (let i = 0; i < pages.length; i++) {
+        pages[i].style.display = 'none';
+      }
+      document.getElementById('mainMenu').style.display = 'flex';
+      document.getElementById('menuSubheader').innerHTML = 'HOME';
+      updateMainPageCount();
+    }
+
+    function updateMainPageCount() {
+      document.getElementById('pageCount').textContent = `${currentIndex + 1}/${mainOptions.length}`;
+    }
+
+    function updateMainSelection(index) {
+      mainOptions.forEach((opt, i) => {
+        opt.classList.toggle('active', i === index);
+        if (i === index) opt.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      updateMainPageCount();
+    }
+
+    function updateSelfSelection(index) {
+      selfOptions.forEach((opt, i) => {
+        opt.classList.toggle('active', i === index);
+        if (i === index) opt.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      document.getElementById('pageCount').textContent = `${index + 1}/${selfOptions.length}`;
+    }
+    
+    // Function to toggle the enabled class when a switch is toggled
+    function toggleOption(checkbox, index) {
+      const option = selfOptions[index];
+      if (checkbox.checked) {
+        option.classList.add('enabled');
+      } else {
+        option.classList.remove('enabled');
+      }
+    }
+
+    function handleKeydown(e) {
+      // Check which menu is currently displayed
+      const mainMenuVisible = document.getElementById('mainMenu').style.display !== 'none';
+      const selfMenuVisible = document.getElementById('selfPage').style.display === 'flex';
+      
+      if (mainMenuVisible) {
+        if (e.key === 'ArrowDown') {
+          currentIndex = (currentIndex + 1) % mainOptions.length;
+          updateMainSelection(currentIndex);
+          e.preventDefault();
+        } else if (e.key === 'ArrowUp') {
+          currentIndex = (currentIndex - 1 + mainOptions.length) % mainOptions.length;
+          updateMainSelection(currentIndex);
+          e.preventDefault();
+        } else if (e.key === 'Enter') {
+          const label = mainOptions[currentIndex].textContent.trim().toLowerCase();
+          if (label.includes('self')) showPage('self');
+          e.preventDefault();
+        }
+      } else if (selfMenuVisible) {
+        if (e.key === 'ArrowDown') {
+          currentSubIndex = (currentSubIndex + 1) % selfOptions.length;
+          updateSelfSelection(currentSubIndex);
+          e.preventDefault();
+        } else if (e.key === 'ArrowUp') {
+          currentSubIndex = (currentSubIndex - 1 + selfOptions.length) % selfOptions.length;
+          updateSelfSelection(currentSubIndex);
+          e.preventDefault();
+        } else if (e.key === 'Enter') {
+          // Toggle the switch when Enter is pressed on a selected option
+          const currentOption = selfOptions[currentSubIndex];
+          const toggle = currentOption.querySelector('input[type="checkbox"]');
+          toggle.checked = !toggle.checked;
+          
+          // Trigger the change event manually to update the visual state
+          const event = new Event('change');
+          toggle.dispatchEvent(event);
+          
+          e.preventDefault();
+        } else if (e.key === 'Backspace') {
+          goBack();
+          e.preventDefault();
+        }
+      }
+    }
+
+    // Initialize everything when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial display state for main menu
+      document.getElementById('mainMenu').style.display = 'flex';
+      
+      // Set initial display state for other pages
+      document.getElementById('selfPage').style.display = 'none';
+      
+      // Add click events to main menu options
+      mainOptions.forEach((option, index) => {
+        option.addEventListener('click', function() {
+          if (index === 0) { // Self option
+            showPage('self');
+          }
+          currentIndex = index;
+          updateMainSelection(currentIndex);
+        });
+      });
+      
+      // Add click events to self menu options
+      selfOptions.forEach((option, index) => {
+        option.addEventListener('click', function(e) {
+          // Don't toggle if clicking directly on the switch
+          if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('slider')) {
+            currentSubIndex = index;
+            updateSelfSelection(currentSubIndex);
+          }
+        });
+        
+        // Add click events for toggle switches
+        const toggle = option.querySelector('input[type="checkbox"]');
+        toggle.addEventListener('click', function(e) {
+          // Stop event propagation to prevent menu selection conflict
+          e.stopPropagation();
+        });
+      });
+      
+      // Focus the menu container so it can receive keyboard events
+      const menuRoot = document.getElementById('menuRoot');
+      menuRoot.focus();
+      
+      // Add the keydown event listener
+      menuRoot.addEventListener('keydown', handleKeydown);
+      
+      // Initialize page count
+      updateMainPageCount();
     });
   </script>
 </body>
